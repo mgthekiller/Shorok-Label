@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OAuth Callback</title>
+</head>
+<body>
+  <h2>Google OAuth Callback</h2>
+  <pre id="result"></pre>
+
+  <script>
+    // نقرأ الـ fragment اللي جوجل بيرجعه بعد الـ login
+    const params = new URLSearchParams(window.location.hash.substring(1));
+
+    const accessToken = params.get("access_token");
+    const tokenType = params.get("token_type");
+    const expiresIn = params.get("expires_in");
+
+    if (accessToken) {
+      document.getElementById("result").textContent =
+        "✅ Access Token: " + accessToken +
+        "\nType: " + tokenType +
+        "\nExpires In: " + expiresIn + " seconds";
+
+      // تقدر تخزنه في localStorage وتستخدمه بعدين
+      localStorage.setItem("google_access_token", accessToken);
+    } else {
+      document.getElementById("result").textContent =
+        "❌ No token found in URL.";
+    }
+  </script>
+</body>
+</html>

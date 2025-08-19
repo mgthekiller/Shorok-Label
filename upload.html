@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload to Google Drive</title>
+</head>
+<body>
+  <h2>Upload Track</h2>
+  <input type="file" id="fileInput">
+  <button onclick="uploadFile()">Upload</button>
+
+  <pre id="status"></pre>
+
+  <script>
+    async function uploadFile() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      const token = localStorage.getItem("google_access_token");
+
+      if (!file || !token) {
+        document.getElementById("status").textContent = "❌ No file or token.";
+        return;
+      }
+
+      const metadata = {
+        name: file.name,
+        mimeType: file.type
+      };
+
+      const form = new FormData();
+      form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+      form.append("file", file);
+
+      const res = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+        method: "POST",
+        headers: new Headers({ "Authorization": "Bearer " + token }),
+        body: form
+      });
+
+      const data = await res.json();
+      document.getElementById("status").textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artist Dashboard - Shorok</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background-color: #0d0d0d; color: #f5f5f5; }
+    header { background-color: #1a1a1a; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #FFD700; }
+    header h1 { font-size: 22px; color: #FFD700; }
+    header button { background-color: #FFD700; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .dashboard { display: grid; grid-template-columns: 1fr 3fr; height: calc(100vh - 60px); }
+    .sidebar { background-color: #141414; padding: 20px; border-right: 1px solid #333; }
+    .sidebar h2 { font-size: 18px; margin-bottom: 15px; color: #FFD700; }
+    .sidebar ul { list-style: none; padding: 0; }
+    .sidebar ul li { margin: 15px 0; }
+    .sidebar ul li a { text-decoration: none; color: #f5f5f5; font-size: 16px; cursor: pointer; }
+    .sidebar ul li a:hover { color: #FFD700; }
+    .content { padding: 30px; overflow-y: auto; }
+    .card { background-color: #1a1a1a; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+    .card h3 { margin-bottom: 10px; color: #FFD700; }
+    .stats { display: flex; gap: 20px; }
+    .stat-box { flex: 1; background-color: #141414; padding: 20px; border-radius: 10px; text-align: center; }
+    .stat-box h2 { color: #FFD700; margin-bottom: 5px; }
+    .msg { margin-top: 10px; font-size: 14px; }
+    .track-item { padding: 10px; border-bottom: 1px solid #333; }
+    .track-status { font-weight: bold; }
+    button.upload-btn { background-color: #FFD700; border: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Shorok Dashboard</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <div class="dashboard">
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="#" onclick="showDashboard()">My Profile</a></li>
+        <li><a href="#" onclick="showUploadForm()">Upload</a></li>
+        <li><a href="#" onclick="showTracks()">Your Tracks</a></li>
+      </ul>
+    </div>
+
+    <div class="content" id="content">
+      <!-- Dashboard -->
+      <div id="dashboardSection">
+        <div class="card">
+          <h3 id="artistName">Welcome, Artist 🎤</h3>
+          <p>Here’s your latest stats and activities.</p>
+          <p id="chosenPlatforms" style="color:#FFD700; font-weight:bold;"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat-box">
+            <h2 id="tracksCount">0</h2>
+            <p>Tracks Uploaded</p>
+          </div>
+          <div class="stat-box">
+            <h2 id="streamsCount">0</h2>
+            <p>Total Streams</p>
+          </div>
+          <div class="stat-box">
+            <h2 id="followersCount">0</h2>
+            <p>Followers</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Recent Activity</h3>
+          <ul id="activityList">
+            <li>Loading...</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Upload Section -->
+      <div id="uploadSection" style="display:none;">
+        <div class="card">
+          <h3>🎵 Upload New Track</h3>
+          <form id="uploadForm" onsubmit="submitForm(event)">
+            <label>اسم التراك:</label><br>
+            <input type="text" id="trackName" placeholder="اكتب اسم التراك" required 
+              style="width:100%; padding:8px; margin:10px 0; border-radius:6px; border:none;"><br>
+
+            <label>غلاف التراك (صورة):</label><br>
+            <input type="file" id="imageFile" accept="image/*" required><br><br>
+
+            <label>ملف التراك (WAV فقط):</label><br>
+            <input type="file" id="trackFile" accept="audio/wav" required><br><br>
+
+            <!-- اختيار المنصات -->
+            <div id="platformSelectArea" style="margin-top:15px; display:none;">
+              <label>اختر منصتين (لو الخطة Free):</label><br><br>
+
+              <b>المنصة الأولى:</b><br>
+              <input type="radio" name="platform1" value="Spotify"> Spotify<br>
+              <input type="radio" name="platform1" value="Apple Music"> Apple Music<br>
+              <input type="radio" name="platform1" value="YouTube"> YouTube<br>
+              <input type="radio" name="platform1" value="SoundCloud"> SoundCloud<br><br>
+
+              <b>المنصة التانية:</b><br>
+              <input type="radio" name="platform2" value="Spotify"> Spotify<br>
+              <input type="radio" name="platform2" value="Apple Music"> Apple Music<br>
+              <input type="radio" name="platform2" value="YouTube"> YouTube<br>
+              <input type="radio" name="platform2" value="SoundCloud"> SoundCloud<br>
+            </div><br>
+
+            <button type="submit" class="upload-btn">🚀 Upload</button>
+            <p id="formStatus" class="msg"></p>
+          </form>
+
+          <!-- Preview -->
+          <div id="previewArea" style="display:none; margin-top:20px;">
+            <h4>📌 Preview:</h4>
+            <img id="previewImg" src="" style="max-width:200px; border-radius:10px; margin-bottom:10px;"><br>
+            <p id="previewTrackName"></p>
+            <audio id="previewAudio" controls></audio>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tracks Section -->
+      <div id="tracksSection" style="display:none;">
+        <div class="card">
+          <h3>📂 Your Tracks</h3>
+          <div id="tracksList">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase + Upload -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBtkse1sA-ho6lRTYJHZ-Sq7rYlIh3mcRw",
+      authDomain: "shorok-4a652.firebaseapp.com",
+      projectId: "shorok-4a652",
+      storageBucket: "shorok-4a652.appspot.com",
+      messagingSenderId: "747491529149",
+      appId: "1:747491529149:web:d6d45c92869b5dd43e02d4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    let artistGlobalName = "Artist";
+    let artistData = {};
+    let currentUser = null;
+
+    // Load Artist Data
+    async function loadArtistData(uid) {
+      const ref = doc(db, "singup_info", uid);
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+        artistData = snap.data();
+        artistGlobalName = artistData.artistName || "Artist";
+        document.getElementById("artistName").textContent = `Welcome, ${artistGlobalName} 🎤`;
+        document.getElementById("tracksCount").textContent = artistData.tracksUploaded || 0;
+        document.getElementById("streamsCount").textContent = artistData.views || 0;
+        document.getElementById("followersCount").textContent = artistData.followers || 0;
+
+        const activityList = document.getElementById("activityList");
+        activityList.innerHTML = "";
+
+        const li1 = document.createElement("li");
+        li1.textContent = `🎧 Last Track: ${artistData.lastTrack || "No recent track"}`;
+        activityList.appendChild(li1);
+
+        const li2 = document.createElement("li");
+        li2.textContent = `🔥 Popular Track: ${artistData.pouplerTrack || "No popular track"}`;
+        activityList.appendChild(li2);
+
+        if (!artistData.selectedPlatforms) {
+          document.getElementById("platformSelectArea").style.display = "block";
+        } else {
+          document.getElementById("chosenPlatforms").textContent = "📡 منصاتك المختارة: " + artistData.selectedPlatforms.join(", ");
+        if (artistData.isAdmin === true) {
+         document.getElementById("adminPanelLink").style.display = "block";
+          }
+        }
+      }
+    }
+
+    // Show Sections
+    window.showDashboard = function() {
+      document.getElementById("dashboardSection").style.display = "block";
+      document.getElementById("uploadSection").style.display = "none";
+      document.getElementById("tracksSection").style.display = "none";
+    }
+    window.showUploadForm = function() {
+      document.getElementById("dashboardSection").style.display = "none";
+      document.getElementById("uploadSection").style.display = "block";
+      document.getElementById("tracksSection").style.display = "none";
+    }
+    window.showTracks = async function() {
+      document.getElementById("dashboardSection").style.display = "none";
+      document.getElementById("uploadSection").style.display = "none";
+      document.getElementById("tracksSection").style.display = "block";
+
+      const list = document.getElementById("tracksList");
+      list.innerHTML = "Loading...";
+
+      const q = query(collection(db, "tracks"), where("uid", "==", currentUser.uid));
+      const snap = await getDocs(q);
+      list.innerHTML = "";
+
+      snap.forEach(docSnap => {
+        const t = docSnap.data();
+        const div = document.createElement("div");
+        div.className = "track-item";
+        div.innerHTML = `🎶 ${t.trackName} - <span class="track-status">${t.status}</span>`;
+        list.appendChild(div);
+      });
+
+      if (list.innerHTML === "") list.innerHTML = "No tracks uploaded yet.";
+    }
+
+    // Submit Upload Form
+    window.submitForm = async function(e) {
+      e.preventDefault();
+
+      const trackName = document.getElementById("trackName").value.trim();
+      const imageFile = document.getElementById("imageFile").files[0];
+      const trackFile = document.getElementById("trackFile").files[0];
+      const status = document.getElementById("formStatus");
+      const previewArea = document.getElementById("previewArea");
+      const previewImg = document.getElementById("previewImg");
+      const previewAudio = document.getElementById("previewAudio");
+      const previewTrackName = document.getElementById("previewTrackName");
+
+      if (!trackName || !imageFile || !trackFile) {
+        status.textContent = "⚠️ لازم تملى كل البيانات";
+        return;
+      }
+
+      if (!trackFile.name.endsWith(".wav")) {
+        status.textContent = "⚠️ لازم ترفع تراك بصيغة WAV فقط";
+        return;
+      }
+
+      let selectedPlatforms = [];
+
+      if (!artistData.selectedPlatforms) {
+        const platform1 = document.querySelector('input[name="platform1"]:checked');
+        const platform2 = document.querySelector('input[name="platform2"]:checked');
+
+        if (!platform1 || !platform2) {
+          status.textContent = "⚠️ لازم تختار منصتين";
+          return;
+        }
+
+        if (platform1.value === platform2.value) {
+          status.textContent = "⚠️ مش مسموح تختار نفس المنصة مرتين";
+          return;
+        }
+
+        selectedPlatforms = [platform1.value, platform2.value];
+
+        await setDoc(doc(db, "singup_info", currentUser.uid), {
+          selectedPlatforms
+        }, { merge: true });
+        artistData.selectedPlatforms = selectedPlatforms;
+
+        document.getElementById("chosenPlatforms").textContent = "📡 منصاتك المختارة: " + selectedPlatforms.join(", ");
+      } else {
+        selectedPlatforms = artistData.selectedPlatforms;
+      }
+
+      status.textContent = "⏳ جاري رفع البيانات...";
+
+      try {
+        const imgData = new FormData();
+        imgData.append("file", imageFile);
+        imgData.append("upload_preset", "shorok_preset");
+
+        const imgRes = await fetch("https://api.cloudinary.com/v1_1/dhna8fguk/image/upload", {
+          method: "POST",
+          body: imgData
+        });
+        const imgJson = await imgRes.json();
+        if (!imgJson.secure_url) throw new Error("Image upload failed");
+
+        const trackData = new FormData();
+        trackData.append("file", trackFile);
+        trackData.append("upload_preset", "shorok_preset");
+
+        const trackRes = await fetch("https://api.cloudinary.com/v1_1/dhna8fguk/video/upload", {
+          method: "POST",
+          body: trackData
+        });
+        const trackJson = await trackRes.json();
+        if (!trackJson.secure_url) throw new Error("Track upload failed");
+
+        // Save in Firestore
+        await addDoc(collection(db, "tracks"), {
+          uid: currentUser.uid,
+          trackName,
+          imageURL: imgJson.secure_url,
+          audioURL: trackJson.secure_url,
+          status: "Pending",
+          createdAt: new Date()
+        });
+
+        previewArea.style.display = "block";
+        previewImg.src = imgJson.secure_url;
+        previewTrackName.textContent = `🎶 ${trackName}`;
+        previewAudio.src = trackJson.secure_url;
+
+        status.textContent = `✅ التراك اتبعت بنجاح على: ${selectedPlatforms.join(", ")}`;
+
+        // إرسال إلى ديسكورد مع زرارين
+        await fetch("https://discord.com/api/webhooks/1407036346379407521/1oZMDms-7e2Dcmdi8X6EOSwdq1aP3GNuYz9nBqvzDhfoqoLtG9qYaDi7xv_i24gmHTwV", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: artistGlobalName,
+            avatar_url: imgJson.secure_url,
+            embeds: [
+              {
+                title: `🎵 ${trackName}`,
+                description: `👤 الفنان: **${artistGlobalName}**\n📡 المنصات: ${selectedPlatforms.join(", ")}`,
+                color: 16766720,
+                thumbnail: { url: imgJson.secure_url },
+                fields: [
+                  {
+                    name: "🔊 استمع للتراك",
+                    value: `[اضغط هنا للاستماع](${trackJson.secure_url})`
+                  }
+                ],
+                footer: {
+                  text: "Shorok Music Distribution"
+                },
+                timestamp: new Date().toISOString()
+              }
+            ],
+            components: [
+              {
+                type: 1,
+                components: [
+                  { type: 2, style: 3, label: "✅ Accept", custom_id: "accept_track" },
+                  { type: 2, style: 4, label: "❌ Reject", custom_id: "reject_track" }
+                ]
+              }
+            ]
+          })
+        });
+
+      } catch (err) {
+        console.error(err);
+        status.textContent = "❌ حصل خطأ أثناء الرفع";
+      }
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        currentUser = user;
+        loadArtistData(user.uid);
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      });
+    });
+  </script>
+</body>
+</html>

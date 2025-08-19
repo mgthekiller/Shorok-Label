@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shorok Label</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+  <h1 id="title">Shorok Label</h1>
+  <nav>
+    <a href="#about" id="nav-about">About Us</a>
+    <a href="#artists" id="nav-artists">Our Artists</a>
+    <a href="#tracks" id="nav-tracks">Tracks</a>
+    <a href="#contact" id="nav-contact">Contact</a>
+    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=223825816672-54g0031hlqli9ovl4o9b93f5ncoc1nh7.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:5500/callback.html&response_type=token&scope=https://www.googleapis.com/auth/drive.file">
+  Login with Google
+</a>
+
+
+    <button onclick="toggleLanguage()" id="lang-btn">عربي</button>
+  </nav>
+  <button id="sign-in-btn">Sign In</button>
+</header>
+
+  <section id="about">
+    <h2 id="about-title">About Shorok Label</h2>
+    <p id="about-text">Shorok Label is a premium music distribution company delivering tracks to major streaming platforms with professional cover art. We empower artists to share their music globally with ease and quality.</p>
+  </section>
+  <button id="get-started-btn">Get Started</button>
+
+
+  <section id="artists">
+    <h2 id="artists-title">Our Artists</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="3zraiel.png" width="150" height="150" alt="3zraiel Artist">
+        <h3>3zraiel</h3>
+      </div>
+      <div class="card">
+        <a href="https://open.spotify.com/artist/67JjaqyIVwxuuONnfArCqD"><img src="Untitled (1).png" width="150" height="150"></a>
+        <h3>Solo</h3>
+      </div>
+      <div class="card">
+        <a href="https://open.spotify.com/artist/2IHyBdd4NfPulJUc8oofxm"><img src="lil.jpg" width="150" height="150"></a>
+        <h3>Lil Diabel</h3>
+      </div>
+      <div class="card">
+        <img src="ANASJADO.jpg" width="150" height="150">
+        <h3>Anas Jado </h3>
+      </div>
+      <div class="card">
+        <img src="trakor.jpeg" width="150" height="150">
+        <h3>Trackor</h3>
+      </div>
+    </div>
+  </section>
+
+  <section id="tracks">
+    <h2 id="tracks-title">Our Latest Tracks</h2>
+    <div class="grid">
+      <div class="card">
+        <a href="https://open.spotify.com/album/0cXpvfnA7RicX7bxhq3va4"><img src="warda.jpg" alt="Track 1 Cover"></a>
+        <h3>EP Warda by Lil Diabel</h3>
+      </div>
+      <div class="card">
+        <img src="kedba kbera.jpg" alt="Track 2 Cover">
+        <h3>Kedba Kbera by Lord</h3>
+      </div>
+      <div class="card">
+        <img src="virus.jpg" alt="Track 3 Cover">
+        <h3>Virus by Solo </h3>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 id="contact-title">Contact Us</h2>
+    <p id="contact-email">Email: <a href="mailto:mohamedgaming966@gmail.com" style="color:#f0c040;">mohamedgaming966@gmail.com</a></p>
+    <p id="contact-phone">Phone: <a href="tel:+201098944533" style="color:#f0c040;">+20 109 894 4533</a></p>
+  </section>
+
+<!-- ===== Pricing Section ===== -->
+<section id="pricing" class="pricing">
+  <h2 class="pricing-title">Plans & Pricing</h2>
+
+  <!-- Billing Toggle -->
+  <div class="billing-toggle">
+    <span>Monthly</span>
+    <label class="switch">
+      <input type="checkbox" id="billingSwitch" />
+      <span class="slider"></span>
+    </label>
+    <span>Yearly <small>(save 20%)</small></span>
+  </div>
+
+  <div class="pricing-grid">
+    <!-- Free Plan -->
+    <div class="price-card">
+      <div class="badge">FREE</div>
+      <h3>Starter</h3>
+      <p class="subtitle">Perfect to get started</p>
+      <div class="price">
+        <span class="currency">$</span>
+        <span class="amount" data-monthly="0" data-yearly="0">0</span>
+        <span class="per">/3 mo</span>
+      </div>
+      <ul class="features">
+        <li>Upload up to 5 tracks</li>
+        <li>Basic cover previews</li>
+        <li>Email support</li>
+        <li>Distribution to 2 platforms</li>
+      </ul>
+      <a class="cta outline" href="signup.html">Get Started</a>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="price-card pro">
+      <div class="badge hot">PRO</div>
+      <h3>Pro Artist</h3>
+      <p class="subtitle">For serious releases</p>
+      <div class="price">
+        <span class="currency">$</span>
+        <span class="amount" data-monthly="250" data-yearly="500">500</span>
+        <span class="per">/mo</span>
+      </div>
+      <ul class="features">
+        <li>Unlimited track uploads</li>
+        <li>Priority review</li>
+        <li>Cover art quality check</li>
+        <li>Distribution to all major platforms</li>
+        <li>Artist dashboard & analytics</li>
+        <li>Discord support channel</li>
+      </ul>
+      <a class="cta" href="signup.html">Upgrade</a>
+    </div>
+  </div>
+</section>
+
+
+
+  <footer>
+    <p id="footer-text">&copy; 2025 Shorok Label. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js">
+  </script>
+</body>
+</html>

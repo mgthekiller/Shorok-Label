@@ -1,0 +1,322 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    line-height: 1.6;
+}
+
+header {
+    padding: 20px 0;
+    text-align: center;
+    background: linear-gradient(90deg, #000, #111);
+    border-bottom: 1px solid #222;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+header h1 {
+    font-size: 2.8rem;
+    letter-spacing: 3px;
+    font-weight: bold;
+    color: #f0c040;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a, nav button {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    padding-bottom: 2px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+nav a:hover, nav button:hover {
+    color: #f0c040;
+    border-bottom: 2px solid #f0c040;
+}
+
+section {
+    padding: 70px 20px;
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #f0c040;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+section p {
+    max-width: 850px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    color: #ccc;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.card {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(240,192,64,0.25);
+}
+
+.card img {
+  width: auto; /* يخلي العرض من الـ HTML */
+  height: auto; /* يخلي الطول من الـ HTML */
+  max-width: 100%; /* يمنع الصورة تكبر أكتر من الكارد */
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+
+/* لو حطيت عرض (width) في HTML هيتنفذ غصب عن أي حاجة */
+img{
+  width: auto !important;
+  height: auto !important;
+
+}
+
+.card h3 {
+    padding: 15px;
+    font-size: 1.25rem;
+    color: #f0c040;
+}
+
+footer {
+    padding: 20px;
+    background: #0d0d0d;
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 1px solid #222;
+    color: #aaa;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+#get-started-btn {
+  background-color: #f0c040; /* أصفر */
+  color: #000; /* أسود */
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 20px auto;
+  display: block; /* عشان ييجي في النص */
+}
+
+#get-started-btn:hover {
+  background-color: #ffda6a; /* أصفر أفتح عند الهوفر */
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(240, 192, 64, 0.8);
+}
+#sign-in-btn {
+  background-color: transparent; /* شفاف */
+  color: #f0c040; /* أصفر */
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 10px 24px;
+  border: 2px solid #f0c040;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px auto;
+  display: block;
+}
+
+#sign-in-btn:hover {
+  background-color: #f0c040;
+  color: #000;
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(240, 192, 64, 0.8);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* يخلي العناصر تتوزع */
+  padding: 10px 20px;
+  background-color: #000;
+  color: #f0c040;
+}
+
+header h1 {
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#sign-in-btn {
+  margin-left: auto; /* يزق الزرار لأقصى اليمين */
+  background-color: transparent;
+  color: #f0c040;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 8px 20px;
+  border: 2px solid #f0c040;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#sign-in-btn:hover {
+  background-color: #f0c040;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(240, 192, 64, 0.7);
+}
+/* ===== Pricing Styles ===== */
+.pricing { 
+  padding: 70px 20px; 
+  max-width: 1100px; 
+  margin: 0 auto; 
+  text-align: center; 
+  background: #000; 
+  color: #fff; 
+}
+.pricing-title {
+  font-size: 2.2rem; 
+  margin-bottom: 20px; 
+  border-bottom: 3px solid #f0c040; 
+  display: inline-block; 
+  padding-bottom: 6px;
+}
+.billing-toggle {
+  display: inline-flex; 
+  align-items: center; 
+  gap: 12px; 
+  margin: 18px 0 32px;
+  color: #ddd;
+}
+.billing-toggle small { color: #f0c040; }
+
+.switch { position: relative; display: inline-block; width: 54px; height: 28px; }
+.switch input { display: none; }
+.slider {
+  position: absolute; cursor: pointer; inset: 0; 
+  background: #222; border: 1px solid #333; border-radius: 999px; 
+  transition: .3s;
+}
+.slider:before {
+  content: ""; position: absolute; height: 22px; width: 22px; 
+  left: 3px; top: 50%; transform: translateY(-50%);
+  background: #f0c040; border-radius: 50%; transition: .3s;
+  box-shadow: 0 0 10px rgba(240,192,64,.5);
+}
+.switch input:checked + .slider { background: #111; }
+.switch input:checked + .slider:before { transform: translate(26px, -50%); }
+
+.pricing-grid {
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  gap: 24px;
+}
+.price-card {
+  background: #0d0d0d; 
+  border: 1px solid #222; 
+  border-radius: 16px; 
+  padding: 26px 22px; 
+  text-align: left; 
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.price-card:hover { 
+  transform: translateY(-6px); 
+  box-shadow: 0 10px 28px rgba(240,192,64,.15); 
+  border-color: #2a2a2a;
+}
+.price-card .badge {
+  display: inline-block; 
+  font-size: .8rem; 
+  letter-spacing: .6px; 
+  padding: 6px 10px; 
+  border-radius: 999px; 
+  border: 1px solid #333; 
+  color: #bbb;
+}
+.price-card .badge.hot {
+  background: #f0c040; color: #000; border-color: #f0c040; font-weight: 700;
+}
+.price-card.pro { 
+  background: #121212; 
+  border-color: #3a300f;
+  box-shadow: 0 0 0 2px rgba(240,192,64,.15) inset;
+}
+
+.price-card h3 { font-size: 1.4rem; margin: 12px 0 4px; color: #fff; }
+.price-card .subtitle { color: #bdbdbd; margin-bottom: 14px; }
+
+.price { display: flex; align-items: baseline; gap: 6px; margin: 10px 0 16px; }
+.price .currency { color: #f0c040; font-weight: 700; }
+.price .amount { font-size: 2.2rem; font-weight: 800; color: #fff; }
+.price .per { color: #aaa; }
+
+.features { list-style: none; margin: 14px 0 18px; padding: 0; }
+.features li { 
+  padding: 8px 0; 
+  border-bottom: 1px dashed #222; 
+  color: #ddd;
+}
+.features li:last-child { border-bottom: none; }
+
+.cta {
+  display: inline-block; 
+  text-align: center; 
+  width: 100%;
+  padding: 12px 18px; 
+  border-radius: 12px; 
+  background: #f0c040; 
+  color: #000; 
+  font-weight: 800; 
+  text-decoration: none; 
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.cta:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(240,192,64,.25); }
+
+.cta.outline {
+  background: transparent; 
+  color: #f0c040; 
+  border: 2px solid #f0c040;
+}
+.cta.outline:hover { background: #f0c040; color: #000; }
